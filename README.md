@@ -1,1 +1,1 @@
-Trying to learn python crawlers. (^_^)
+Trying to learn python crawlers. (^\_^)
