@@ -9,8 +9,16 @@ from __future__ import unicode_literals
 import json
 import six.moves
 import scrapy
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy.exceptions import DropItem
 
 BASE_URL = 'https://www.panda.tv'
+
+
+class Video(scrapy.Item):
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+
 
 class PandaSpider(scrapy.Spider):
     name = "panda"
@@ -24,8 +32,6 @@ class PandaSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
     
     def parse(self, response):
-        cookie = response.headers.getlist('Cookie')
-        print(cookie)
         with open('panda_body.html', 'wb') as bodyfile:
             bodyfile.write(response.body)
             bodyfile.close()
@@ -37,4 +43,7 @@ class PandaSpider(scrapy.Spider):
                     '主播': ''.join(video.css('span[class*=nickname]::text').extract()).strip(),
                     '观看人数': video.css('span.video-number::text').extract_first(),
                 }, jsonfile, indent=4, ensure_ascii=False)
+                jsonfile.write('\n')
+                img = Video(image_urls=[video.css('img.video-img::attr(data-original)').extract_first()])
+                yield img
             jsonfile.close()

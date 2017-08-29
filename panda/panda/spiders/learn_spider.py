@@ -49,4 +49,5 @@ class PandaSpider(scrapy.Spider):
                     '课程名称': lesson.css('a::text').extract_first().strip(),
                     'url': lesson.css('a::attr(href)').extract_first(),
                 }, jsonfile, indent=4, ensure_ascii=False)
+                jsonfile.write('\n')
             jsonfile.close()
