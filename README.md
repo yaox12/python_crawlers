@@ -1,5 +1,5 @@
-Trying to learn python crawlers. 
+Try some python crawlers.  
 
-url: Some tests with Python urllib.
+url: Some tests with Python urllib.  
 
-panda: A scrapy project.
+panda: A scrapy project.  

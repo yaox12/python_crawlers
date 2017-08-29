@@ -39,7 +39,7 @@ class PandaSpider(scrapy.Spider):
                               callback=self.after_login)
 
     def after_login(self, response):
-        with open('./learn_body.html', 'wb') as bodyfile:
+        with open('learn_body.html', 'wb') as bodyfile:
             bodyfile.write(response.body)
             bodyfile.close()
         

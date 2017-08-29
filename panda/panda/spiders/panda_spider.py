@@ -26,10 +26,10 @@ class PandaSpider(scrapy.Spider):
     def parse(self, response):
         cookie = response.headers.getlist('Cookie')
         print(cookie)
-        with open('./panda_body.html', 'wb') as bodyfile:
+        with open('panda_body.html', 'wb') as bodyfile:
             bodyfile.write(response.body)
             bodyfile.close()
-        with open('./panda_videos.json', 'w') as jsonfile:
+        with open('panda_videos.json', 'w') as jsonfile:
             for video in response.css('li.video-list-item'):
                 json.dump({
                     '直播链接': BASE_URL + video.css('a.video-list-item-wrap::attr(href)').extract_first(),
