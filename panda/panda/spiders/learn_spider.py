@@ -39,11 +39,11 @@ class PandaSpider(scrapy.Spider):
                               callback=self.after_login)
 
     def after_login(self, response):
-        with open('learn_body.html', 'wb') as bodyfile:
+        with open('result/learn_body.html', 'wb') as bodyfile:
             bodyfile.write(response.body)
             bodyfile.close()
         
-        with open('learn_lessons.json', 'w') as jsonfile:
+        with open('result/learn_lessons.json', 'w') as jsonfile:
             for lesson in response.css('tr[class*=info_tr]'):
                 json.dump({
                     '课程名称': lesson.css('a::text').extract_first().strip(),
