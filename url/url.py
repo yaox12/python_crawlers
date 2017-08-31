@@ -31,7 +31,7 @@ def get_content(url, data=None):
 
 res = get_content(HS_URL).decode()
 
-with open('hs.html', 'w') as outfile:
+with open('result/hs.html', 'w') as outfile:
     # outfile.write(str(res, encoding='utf-8'))
     # outfile.write(bytes.decode(res))
     # outfile.write(res.decode())
@@ -40,7 +40,7 @@ with open('hs.html', 'w') as outfile:
 video_list = re.compile(r'<li class="video-list-item[^>]*>(.+?)</li>', re.DOTALL)
 video_it = video_list.finditer(res)
 
-with open('video_list.txt', 'w') as outfile:
+with open('result/video_list.txt', 'w') as outfile:
     get_id = re.compile(r'data-id="(\d+)"')
     get_title = re.compile(r'title="([^"]+)"')
     get_number = re.compile(r'<span class="video-number">(.+?)</span>')
