@@ -1,5 +1,22 @@
 Try some python crawlers.  
 
-url: Some tests with Python urllib.  
+## Usage
+```
+pip install -r requirements.txt
+```
 
-panda: A scrapy project.  
+### url
+Some tests with Python urllib.  
+usage: 
+```
+cd url
+python url.py
+```
+
+### panda
+A scrapy project.  
+usage:
+```
+cd panda
+scrapy crawl panda/learn
+```
