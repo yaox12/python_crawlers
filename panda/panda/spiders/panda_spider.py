@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from __future__ import absolute_import
@@ -37,13 +37,16 @@ class PandaSpider(scrapy.Spider):
             bodyfile.close()
         with open('result/panda_videos.json', 'w') as jsonfile:
             for video in response.css('li.video-list-item'):
-                json.dump({
-                    '直播链接': BASE_URL + video.css('a.video-list-item-wrap::attr(href)').extract_first(),
-                    '直播标题': video.css('span.video-title::text').extract_first(),
-                    '主播': ''.join(video.css('span[class*=nickname]::text').extract()).strip(),
-                    '观看人数': video.css('span.video-number::text').extract_first(),
-                }, jsonfile, indent=4, ensure_ascii=False)
-                jsonfile.write('\n')
-                img = Video(image_urls=[video.css('img.video-img::attr(data-original)').extract_first()])
-                yield img
+                try:
+                    json.dump({
+                        '直播链接': BASE_URL + video.css('a.video-list-item-wrap::attr(href)').extract_first(),
+                        '直播标题': video.css('span.video-title::text').extract_first(),
+                        '主播': ''.join(video.css('span[class*=nickname]::text').extract()).strip(),
+                        '观看人数': video.css('span.video-number::text').extract_first(),
+                    }, jsonfile, indent=4, ensure_ascii=False)
+                    jsonfile.write('\n')
+                    img = Video(image_urls=[video.css('img.video-img::attr(data-original)').extract_first()])
+                    yield img
+                except Exception as e:
+                    pass
             jsonfile.close()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 from __future__ import absolute_import
@@ -47,12 +47,15 @@ with open('result/video_list.txt', 'w') as outfile:
     get_nickname = re.compile(r'<span class="[^>]*nickname">[\s]*(?:<i [^>]*></i>)*(.+?)[\s]*(?:<i [^>]*></i>)*[\s]*</span>', re.DOTALL)
     for match in video_it:
         video = match.group()
-        id = get_id.findall(video)[0]
-        outfile.write('直播链接: ' + BASE_URL + id + '\n')
-        title = get_title.findall(video)[0]
-        outfile.write('直播标题: %s\n' % title)
-        nickname = get_nickname.findall(video)[0].strip()
-        outfile.write('主播: %s\n' % nickname)
-        number = get_number.findall(video)[0]
-        outfile.write('观看人数: %s\n\n' % number)
+        try:
+            id = get_id.findall(video)[0]
+            outfile.write('直播链接: ' + BASE_URL + id + '\n')
+            title = get_title.findall(video)[0]
+            outfile.write('直播标题: %s\n' % title)
+            nickname = get_nickname.findall(video)[0].strip()
+            outfile.write('主播: %s\n' % nickname)
+            number = get_number.findall(video)[0]
+            outfile.write('观看人数: %s\n\n' % number)
+        except Exception as e:
+            pass
     outfile.close()
