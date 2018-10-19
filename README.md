@@ -1,12 +1,13 @@
 Try some python crawlers.  
 
-## Usage
+## Requirements
 ```
-pip install -r requirements.txt
+Python3
+Scrapy
 ```
 
 ### url
-Some tests with Python urllib.  
+Some tests with Python urllib(six).  
 usage: 
 ```
 cd url
@@ -20,3 +21,10 @@ usage:
 cd panda
 scrapy crawl panda/learn
 ```
+
+### meme
+Another scrapy project.
+
+### check_ele
+Python3 urllib with cookies.
+
