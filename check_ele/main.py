@@ -11,6 +11,7 @@ import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
+from email.utils import formataddr
 
 from urllib.request import build_opener, HTTPCookieProcessor, Request
 from urllib.parse import urlencode
@@ -50,20 +51,20 @@ def look_up_ele():
     return ele
 
 def send_email(ele):
-    receivers = [settings.email]
+    message = MIMEText('宿舍剩余电量：{}度，请及时充值！'.format(ele), 'plain', 'utf-8')
+    # message['From'] = Header('Robot', 'utf-8')
+    message['From'] = formataddr(('电量查询bot', settings.mail_usr))
+    message['To'] = ','.join(settings.receivers)
 
-    message = MIMEText('剩余电量：{}度'.format(ele), 'plain', 'utf-8')
-    message['From'] = Header('Robot', 'utf-8')
-    message['To'] = Header('我', 'utf-8')
-
-    subject = '剩余电量自动查询'
+    subject = '宿舍低电量提醒'
     message['Subject'] = Header(subject, 'utf-8')
 
     try:
         smtpObj = smtplib.SMTP_SSL()
         smtpObj.connect(settings.mail_host, 465)
         smtpObj.login(settings.mail_usr, settings.mail_pass)
-        smtpObj.sendmail(settings.mail_usr, receivers, message.as_string())
+        smtpObj.sendmail(settings.mail_usr, settings.receivers, message.as_string())
+        smtpObj.quit()
         print('Email succeed')
     except smtplib.SMTPException:
         print('Email failed')
@@ -71,9 +72,10 @@ def send_email(ele):
 def main():
     print(datetime.datetime.now())
     ele = look_up_ele()
-    print('剩余电量：{}度\n'.format(ele))
+    print('剩余电量：{}度'.format(ele))
     if ele < 50:
         send_email(ele)
+    print()
 
 if __name__ == '__main__':
     main()
